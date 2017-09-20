@@ -1,0 +1,266 @@
+  [1m[35m (21.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (20.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1412758990921235790)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170907194528)
+  [1m[35m (6.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (29.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "password" character varying, "password_digest" character varying, "first_name" character varying, "last_name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170907194528"]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-09-19 20:35:14.481757"], ["updated_at", "2017-09-19 20:35:14.481757"]]
+  [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1412758990921235790)[0m
+  [1m[35m (6.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mUser Load (1.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 11]]
+Started OPTIONS "/v1/signup" for 127.0.0.1 at 2017-09-19 18:25:35 -0400
+  [1m[35m (8.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/v1/signup"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started POST "/v1/login?user[username]=babisha&user[password]=[FILTERED]" for 127.0.0.1 at 2017-09-19 18:27:42 -0400
+Processing by Api::V1::UserController#login as */*
+  Parameters: {"user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 400 Bad Request in 63ms (Views: 0.3ms | ActiveRecord: 17.4ms)
+
+
+Started POST "/v1/signup?user[username]=mohammed&user[password]=[FILTERED]&user[password_confirmation]=[FILTERED]&user[first_name]=Mohammed&user[last_name]=Chisti" for 127.0.0.1 at 2017-09-19 18:27:47 -0400
+Processing by Api::V1::UserController#create as */*
+  Parameters: {"user"=>{"username"=>"mohammed", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "first_name"=>"Mohammed", "last_name"=>"Chisti"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "mohammed"], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "users" ("username", "password_digest", "first_name", "last_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["username", "mohammed"], ["password_digest", "$2a$10$mG461LJsEit1XYnVgZO.6.3sySoZGrcNzypeHZxIsXotT1vENQKKK"], ["first_name", "Mohammed"], ["last_name", "Chisti"], ["created_at", "2017-09-19 22:27:47.554876"], ["updated_at", "2017-09-19 22:27:47.554876"]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Exists (7.0ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["username", "mohammed"], ["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 113ms (Views: 0.9ms | ActiveRecord: 20.5ms)
+
+
+Started OPTIONS "/v1/signup" for 127.0.0.1 at 2017-09-19 18:28:57 -0400
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/v1/signup"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started OPTIONS "/v1/signup" for 127.0.0.1 at 2017-09-19 18:29:24 -0400
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/v1/signup"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started OPTIONS "/v1/signup" for 127.0.0.1 at 2017-09-19 18:32:32 -0400
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/v1/signup"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started OPTIONS "/v1/signup" for 127.0.0.1 at 2017-09-19 18:33:14 -0400
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/v1/signup"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started POST "/v1/signup" for 127.0.0.1 at 2017-09-19 18:33:28 -0400
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::UserController#create as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "first_name"=>"Babisha", "last_name"=>"Manandhar", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]", "first_name"=>"Babisha", "last_name"=>"Manandhar"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (12.9ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "password_digest", "first_name", "last_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["username", "babisha"], ["password_digest", "$2a$10$eYaQMy8RAA.WqG3wWz.Y4u7wQ9GzEB3IJ7hPyXJGJcPf2H3RWcWQG"], ["first_name", "Babisha"], ["last_name", "Manandhar"], ["created_at", "2017-09-19 22:33:29.305957"], ["updated_at", "2017-09-19 22:33:29.305957"]]
+  [1m[35m (6.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["username", "babisha"], ["id", 2], ["LIMIT", 1]]
+Completed 200 OK in 111ms (Views: 1.0ms | ActiveRecord: 27.1ms)
+
+
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:44:15 -0400
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 99ms (Views: 0.8ms | ActiveRecord: 15.0ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:45:42 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (2.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 400 Bad Request in 97ms (Views: 0.3ms | ActiveRecord: 14.2ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:49:33 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 82ms (Views: 0.7ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:51:53 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 140ms (Views: 0.8ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:52:13 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 89ms (Views: 0.6ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:52:54 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 88ms (Views: 0.5ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:53:41 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 76ms (Views: 0.5ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:56:33 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (99.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 276ms (Views: 1.6ms | ActiveRecord: 99.6ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:56:39 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 79ms (Views: 0.5ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 19:57:38 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 77ms (Views: 0.5ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 22:21:12 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 92ms (Views: 3.7ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 22:21:15 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 104ms (Views: 1.1ms | ActiveRecord: 1.9ms)
+
+
+Started POST "/v1/login" for 127.0.0.1 at 2017-09-19 22:21:24 -0400
+Processing by Api::V1::UserController#login as HTML
+  Parameters: {"username"=>"babisha", "password"=>"[FILTERED]", "user"=>{"username"=>"babisha", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "babisha"], ["LIMIT", 1]]
+Completed 200 OK in 78ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
